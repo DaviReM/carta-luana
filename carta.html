@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carta Digital Segura con Efecto</title>
+  <style>
+    /* Reseteo básico */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Tarjetas */
+    .unlock-card, .tiktok-card {
+      background: #111;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      width: 350px;
+      max-width: 90%;
+      text-align: center;
+      color: #fff;
+    }
+
+    /* Inputs y botones */
+    input[type="password"] {
+      width: 80%;
+      padding: 0.5rem;
+      margin-top: 1rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background: #222;
+      color: #fff;
+      text-align: center;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: #1db954;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #17a44b;
+    }
+
+    /* Contenedor de contenido oculto */
+    #content { display: none; }
+
+    /* Estilos del bloque TikTok */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 0.75rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .tab {
+      flex: 1;
+      padding: 6px 0;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .tab.active,
+    .tab:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .canvas {
+      position: relative;
+      height: 400px;
+      background: url('starry-bg.jpg') center/cover no-repeat;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .message {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      text-align: center;
+      font-size: 2rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    .love {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 120px;
+      transform: translate(-50%, -50%);
+    }
+    .love::before {
+      content: '❤';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      font-size: 8rem;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: scaleX(-1);
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%,100% { transform: translate(-50%,-50%) scale(1) scaleX(-1); }
+      50%     { transform: translate(-50%,-50%) scale(1.2) scaleX(-1); }
+    }
+
+    .characters img {
+      position: absolute;
+      bottom: 20px;
+      width: 80px;
+      height: auto;
+    }
+    .characters .left  { left: 10px; }
+    .characters .right { right: 10px; }
+  </style>
+</head>
+<body>
+
+  <!-- Sección de Desbloqueo -->
+  <div id="unlock" class="unlock-card">
+    <h2>Introduce la fecha de nuestro mes</h2>
+    <input id="codeInput" type="password" placeholder="AAAA" maxlength="4" />
+    <button id="unlockButton">Desbloquear</button>
+  </div>
+
+  <!-- Contenido Protegido -->
+  <div id="content" class="tiktok-card">
+    <!-- Bloque TikTok -->
+    <div class="tabs">
+      <div class="tab active">Html</div>
+      <div class="tab">Css</div>
+      <div class="tab">Js</div>
+    </div>
+    <div class="canvas">
+      <h1 class="message">Te amo</h1>
+      <div class="love"></div>
+      <div class="characters">
+        <img src="left-character.png" alt="Personaje izq." class="left" />
+        <img src="right-character.png" alt="Personaje der." class="right" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const unlockDiv = document.getElementById('unlock');
+      const contentDiv = document.getElementById('content');
+      const input = document.getElementById('codeInput');
+      const button = document.getElementById('unlockButton');
+
+      function tryUnlock() {
+        if (input.value === '2025') {
+          unlockDiv.style.display = 'none';
+          contentDiv.style.display = 'block';
+        } else {
+          alert('Código incorrecto. Inténtalo de nuevo.');
+          input.value = '';
+          input.focus();
+        }
+      }
+
+      button.addEventListener('click', tryUnlock);
+      input.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') tryUnlock();
+      });
+    });
+  </script>
+
+</body>
+</html>
